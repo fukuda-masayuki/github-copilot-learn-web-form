@@ -10,7 +10,7 @@
 
 ## ローカル実行（Dockerなし）
 
-前提：PHP 8.2+ / Composer がインストール済み。
+前提：PHP 8.2+ / Composer / Node.js（npm）がインストール済み。
 
 ```bash
 composer install
@@ -18,8 +18,15 @@ cp .env.example .env
 php artisan key:generate
 php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
 php artisan migrate
+
+# Tailwind（Vite）
+npm install
+npm run build
+
 php artisan serve
 ```
+
+※ 開発中にリアルタイム反映したい場合は、別ターミナルで `npm run dev` を起動してください。
 
 ブラウザで `http://localhost:8000` を開きます。
 
@@ -40,6 +47,7 @@ docker compose up --build
 ブラウザで `http://localhost:8000` を開きます。
 
 ※ 初回起動時はコンテナ側で `.env` 作成と `APP_KEY` 生成、`migrate` を自動実行します。
+※ UIのために Tailwind（Vite）の `npm install` / `npm run build` も必要に応じて自動実行します。
 
 テストをDockerで実行する場合：
 

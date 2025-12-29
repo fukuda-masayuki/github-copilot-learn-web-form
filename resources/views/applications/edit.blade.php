@@ -3,38 +3,66 @@
 @section('title', '申込編集')
 
 @section('content')
-    <h1>申込編集</h1>
+    <div class="mb-6">
+        <h1 class="text-2xl font-semibold tracking-tight">申込編集</h1>
+        <p class="mt-1 text-sm text-gray-600">申込内容を更新します。</p>
+    </div>
 
     @include('partials.form-errors')
 
-    <form method="post" action="{{ route('applications.update', $application) }}">
+    <form method="post" action="{{ route('applications.update', $application) }}" class="mt-6 space-y-5 rounded-lg border bg-white p-6">
         @csrf
         @method('put')
 
         <div>
-            <label for="name">氏名（必須）</label><br>
-            <input id="name" name="name" type="text" value="{{ old('name', $application->name) }}" maxlength="100" required>
+            <label for="name" class="block text-sm font-medium text-gray-900">氏名（必須）</label>
+            <input
+                id="name"
+                name="name"
+                type="text"
+                value="{{ old('name', $application->name) }}"
+                maxlength="100"
+                required
+                class="mt-2 block w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900 {{ $errors->has('name') ? 'border-red-300 focus:ring-red-500' : 'border-gray-300' }}"
+            >
             @error('name')
-                <div>{{ $message }}</div>
+                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
-            <label for="email">メール（必須）</label><br>
-            <input id="email" name="email" type="email" value="{{ old('email', $application->email) }}" maxlength="254" required>
+            <label for="email" class="block text-sm font-medium text-gray-900">メール（必須）</label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                value="{{ old('email', $application->email) }}"
+                maxlength="254"
+                required
+                class="mt-2 block w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900 {{ $errors->has('email') ? 'border-red-300 focus:ring-red-500' : 'border-gray-300' }}"
+            >
             @error('email')
-                <div>{{ $message }}</div>
+                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
-            <label for="message">メッセージ（任意）</label><br>
-            <textarea id="message" name="message" maxlength="2000" rows="6">{{ old('message', $application->message) }}</textarea>
+            <label for="message" class="block text-sm font-medium text-gray-900">メッセージ（任意）</label>
+            <textarea
+                id="message"
+                name="message"
+                maxlength="2000"
+                rows="6"
+                class="mt-2 block w-full rounded-md border px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900 {{ $errors->has('message') ? 'border-red-300 focus:ring-red-500' : 'border-gray-300' }}"
+            >{{ old('message', $application->message) }}</textarea>
             @error('message')
-                <div>{{ $message }}</div>
+                <p class="mt-2 text-sm text-red-700">{{ $message }}</p>
             @enderror
         </div>
 
-        <button type="submit">更新</button>
+        <div class="flex items-center justify-between gap-3">
+            <a href="{{ route('applications.show', $application) }}" class="text-sm font-medium text-gray-700 hover:text-gray-900">詳細へ戻る</a>
+            <button type="submit" class="inline-flex items-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2">更新</button>
+        </div>
     </form>
 @endsection

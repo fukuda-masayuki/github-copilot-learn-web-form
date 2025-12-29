@@ -14,6 +14,16 @@ fi
 
 php -r "file_exists('database/database.sqlite') || touch('database/database.sqlite');"
 
+if [ -f package.json ]; then
+  if [ ! -d node_modules ]; then
+    npm install
+  fi
+
+  if [ ! -f public/build/manifest.json ]; then
+    npm run build
+  fi
+fi
+
 chmod -R 775 storage bootstrap/cache || true
 
 php artisan migrate --force
